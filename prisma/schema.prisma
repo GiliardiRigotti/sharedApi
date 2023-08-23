@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  cpf      String @unique
+  password String
+  flag     String
+
+  @@map("users")
+}
+
+model LegalGuardian {
+  id             Int           @id @default(autoincrement())
+  name           String
+  cpf            String        @unique
+  password       String
+  address        Address       @relation(fields: [addressId], references: [id])
+  neighborhood   Neighborhood  @relation(fields: [neighborhoodId], references: [id])
+  numberPhones   NumberPhone[]
+  students       Student[]
+  addressId      Int
+  neighborhoodId Int
+
+  @@map("legalguardians")
+}
+
+model NumberPhone {
+  id              Int            @id @default(autoincrement())
+  number          String         @unique
+  LegalGuardian   LegalGuardian? @relation(fields: [legalGuardianId], references: [id])
+  legalGuardianId Int?
+
+  @@map("numberPhones")
+}
+
+model Student {
+  id              Int            @id @default(autoincrement())
+  name            String
+  birthdate       String
+  addressNumber   Int
+  addressRef      String?
+  class           Class          @relation(fields: [classId], references: [id])
+  address         Address        @relation(fields: [addressId], references: [id])
+  neighborhood    Neighborhood   @relation(fields: [neighborhoodId], references: [id])
+  LegalGuardian   LegalGuardian? @relation(fields: [legalGuardianId], references: [id])
+  legalGuardianId Int?
+  addressId       Int
+  neighborhoodId  Int
+  classId         Int
+  Shift           Shift          @relation(fields: [shiftId], references: [id])
+  shiftId         Int
+
+  @@map("studends")
+}
+
+model Neighborhood {
+  id            Int             @id @default(autoincrement())
+  name          String          @unique
+  Student       Student[]
+  LegalGuardian LegalGuardian[]
+
+  @@map("neighborhoods")
+}
+
+model Address {
+  id            Int             @id @default(autoincrement())
+  name          String          @unique
+  Student       Student[]
+  LegalGuardian LegalGuardian[]
+
+  @@map("addresses")
+}
+
+model Class {
+  id      Int       @id @default(autoincrement())
+  name    String    @unique
+  Student Student[]
+
+  @@map("classes")
+}
+
+model Shift {
+  id      Int       @id @default(autoincrement())
+  name    String    @unique
+  Student Student[]
+
+  @@map("shifts")
+}
