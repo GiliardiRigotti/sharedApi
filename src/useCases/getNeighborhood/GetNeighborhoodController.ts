@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateNeighborhoodUseCase } from "./CreateNeighborhoodUseCase";
+import { CreateNeighborhoodUseCase } from "./GetNeighborhoodUseCase";
 
 class CreateNeighborhoodController {
     async handle(request: Request, response: Response) {
