@@ -1,16 +1,15 @@
 import { Request, Response } from "express";
-import { CreateNeighborhoodUseCase } from "./GetNeighborhoodUseCase";
+import { GetListNeighborhoodsUseCase } from "./GetListNeighborhoodsUseCase";
 
-class CreateNeighborhoodController {
+class GetListNeighborhoodsController {
     async handle(request: Request, response: Response) {
-        const { name } = request.body
 
-        const createNeighborhoodUseCase = new CreateNeighborhoodUseCase()
+        const getListNeighborhoodsUseCase = new GetListNeighborhoodsUseCase()
 
-        const user = await createNeighborhoodUseCase.execute({ name })
+        const neighborhoods = await getListNeighborhoodsUseCase.execute()
 
-        return response.json(user)
+        return response.json(neighborhoods)
     }
 }
 
-export { CreateNeighborhoodController }
+export { GetListNeighborhoodsController }

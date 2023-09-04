@@ -24,7 +24,7 @@ class AuthUserUseCase {
 
         const token = sign({}, 'c2a0d19c-8918-4044-aa50-9f9e90aadf84', {
             subject: userAlreadyExists.id.toString(),
-            expiresIn: '20s'
+            expiresIn: '1h'
         })
         return { token }
     }
