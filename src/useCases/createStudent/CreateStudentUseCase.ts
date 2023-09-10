@@ -8,12 +8,12 @@ interface IStudentRequest {
     addressNumber: number
     addressRef?: string
     neighborhoodId: number
-    classId: number
+    gradeId: number
     shiftId: number
 }
 
 class CreateStudentUseCase {
-    async execute({ name, birthdate, neighborhoodId, addressId, shiftId, classId, addressNumber, addressRef }: IStudentRequest) {
+    async execute({ name, birthdate, neighborhoodId, addressId, shiftId, gradeId, addressNumber, addressRef }: IStudentRequest) {
 
 
         const user = await client.student.create({
@@ -23,7 +23,7 @@ class CreateStudentUseCase {
                 addressId,
                 addressNumber,
                 addressRef,
-                classId,
+                gradeId,
                 shiftId,
                 neighborhoodId,
             }

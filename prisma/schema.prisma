@@ -51,15 +51,15 @@ model Student {
   birthdate       String
   addressNumber   Int
   addressRef      String?
-  class           Class          @relation(fields: [classId], references: [id])
+  grade           Grade          @relation(fields: [gradeId], references: [id])
   address         Address        @relation(fields: [addressId], references: [id])
   neighborhood    Neighborhood   @relation(fields: [neighborhoodId], references: [id])
   LegalGuardian   LegalGuardian? @relation(fields: [legalGuardianId], references: [id])
   legalGuardianId Int?
   addressId       Int
   neighborhoodId  Int
-  classId         Int
-  Shift           Shift          @relation(fields: [shiftId], references: [id])
+  gradeId         Int
+  shift           Shift          @relation(fields: [shiftId], references: [id])
   shiftId         Int
 
   @@map("studends")
@@ -83,12 +83,12 @@ model Address {
   @@map("addresses")
 }
 
-model Class {
+model Grade {
   id      Int       @id @default(autoincrement())
   name    String    @unique
   Student Student[]
 
-  @@map("classes")
+  @@map("grades")
 }
 
 model Shift {
