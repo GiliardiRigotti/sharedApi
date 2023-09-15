@@ -1,6 +1,7 @@
 import { compare } from "bcryptjs"
 import { client } from "../../prisma/client"
 import { sign } from "jsonwebtoken"
+import { GenerateRefreshToken } from "../../provider/GenerateRefreshToken"
 
 interface IRequest {
     cpf: string
@@ -26,7 +27,10 @@ class AuthUserUseCase {
             subject: userAlreadyExists.id.toString(),
             expiresIn: '1h'
         })
-        return { token }
+
+        const generateRefreshToken = new GenerateRefreshToken()
+        const refreshToken = await generateRefreshToken.execute(userAlreadyExists.id)
+        return { token, refreshToken }
     }
 }
 
