@@ -1,16 +1,16 @@
-import { Request, Response } from "express"
-import { AuthUserUseCase } from "./AuthUserUseCase"
+import type { Request, Response } from "express";
+import { AuthUserUseCase } from "./AuthUserUseCase";
 
 class AuthUserController {
-    async handle(request: Request, response: Response) {
-        const { cpf, password } = request.body
+	async handle(request: Request, response: Response) {
+		const { cpf, password } = request.body;
 
-        const authUserUseCase = new AuthUserUseCase()
+		const authUserUseCase = new AuthUserUseCase();
 
-        const token = await authUserUseCase.execute({ cpf, password })
+		const token = await authUserUseCase.execute({ cpf, password });
 
-        return response.json(token)
-    }
+		return response.json(token);
+	}
 }
 
-export { AuthUserController }
+export { AuthUserController };

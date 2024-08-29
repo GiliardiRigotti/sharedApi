@@ -10,6 +10,8 @@ const app = express();
 
 app.use(express.json());
 
+app.use("/images", express.static("uploads"));
+
 app.use(router);
 
 app.use(

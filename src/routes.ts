@@ -1,73 +1,43 @@
 import { Router } from "express";
 import { CreateUserController } from "./useCases/createUser/CreateUserController";
 import { AuthUserController } from "./useCases/authUser/AuthUserController";
-import { CreateStudentController } from "./useCases/createStudent/CreateStudentController";
-import { CreateNeighborhoodController } from "./useCases/createNeighborhood/CreateNeighborhoodController";
+import { CreateMilitantController } from "./useCases/createMilitant/CreateMilitantController";
 import { ensureAuth } from "./middlewares/ensureAuth";
-import { GetListNeighborhoodsController } from "./useCases/getNeighborhood/GetListNeighborhoodController";
-import { GetListShiftsController } from "./useCases/getShift/GetListShiftsController";
-import { CreateAddressController } from "./useCases/createAddress/CreateAddressController";
-import { GetListAddressController } from "./useCases/getAddress/GetListAddressController";
-import { CreateGradeController } from "./useCases/createGrade/CreateGradeController";
-import { GetListGradesController } from "./useCases/getGrade/GetListGradesController";
-import { CreateShiftController } from "./useCases/createShift/CreateShiftController";
-import { GetListStudentsController } from "./useCases/getStudents/GetListStudentsController";
-import { GetListStudentsMobileController } from "./useCases/getStudents/GetListStudentsMobileController";
+import { GetListMilitantsController } from "./useCases/getMilitants/GetListMilitantsController";
+import { GetListMilitantsMobileController } from "./useCases/getMilitants/GetListMilitantsMobileController";
+import multer from "multer";
+import { storage } from "./config/multerConfig";
 
-const router = Router()
+const upload = multer({ storage: storage });
 
-const authUserController = new AuthUserController()
+const router = Router();
 
-const createUserController = new CreateUserController()
+const authUserController = new AuthUserController();
 
-const createStudentController = new CreateStudentController()
+const createUserController = new CreateUserController();
 
-const getListStudentsController = new GetListStudentsController()
+const createMilitanteController = new CreateMilitantController();
 
-const createNeighborhoodController = new CreateNeighborhoodController()
+const getListMilitansController = new GetListMilitantsController();
 
-const getListNeighborhoodsController = new GetListNeighborhoodsController()
+const getListMilitantsMobileController = new GetListMilitantsMobileController();
 
-const createAddressController = new CreateAddressController()
+router.post("/user", createUserController.handle);
 
-const getListAddressController = new GetListAddressController()
+router.post("/upload", upload.single("file"), (req, res) => {
+	return res.json(req.file.filename);
+});
 
-const createGradeController = new CreateGradeController()
+router.post("/login", authUserController.handle);
 
-const getListGradesController = new GetListGradesController()
+router.post("/militant", ensureAuth, createMilitanteController.handle);
 
-const createShiftController = new CreateShiftController()
+router.get("/militants", ensureAuth, getListMilitansController.handle);
 
-const getListShiftsController = new GetListShiftsController()
+router.get(
+	"/listMilitants",
+	ensureAuth,
+	getListMilitantsMobileController.handle,
+);
 
-const getListStudentsMobileController = new GetListStudentsMobileController()
-
-router.post('/user', createUserController.handle)
-
-router.post('/login', authUserController.handle)
-
-router.post('/student', ensureAuth, createStudentController.handle)
-
-router.get('/students', ensureAuth, getListStudentsController.handle)
-
-router.get('/listStudents', ensureAuth, getListStudentsMobileController.handle)
-
-router.post('/neighborhood', ensureAuth, createNeighborhoodController.handle)
-
-router.get('/neighborhoods', ensureAuth, getListNeighborhoodsController.handle)
-
-router.post('/address', ensureAuth, createAddressController.handle)
-
-router.get('/address', ensureAuth, getListAddressController.handle)
-
-router.post('/grade', ensureAuth, createGradeController.handle)
-
-router.get('/grades', ensureAuth, getListGradesController.handle)
-
-router.post('/shift', ensureAuth, createShiftController.handle)
-
-router.get('/shifts', ensureAuth, getListShiftsController.handle)
-
-
-
-export { router }
+export { router };

@@ -7,10 +7,20 @@ interface IUserRequest {
 	cpf: string;
 	flag: string;
 	phone: string;
+	nameCandidate: string;
+	numberCandidate: string;
 }
 
 class CreateUserUseCase {
-	async execute({ name, cpf, password, flag, phone }: IUserRequest) {
+	async execute({
+		name,
+		cpf,
+		password,
+		flag,
+		phone,
+		numberCandidate,
+		nameCandidate,
+	}: IUserRequest) {
 		const userAlreadyExists = await client.user.findFirst({
 			where: {
 				cpf,
@@ -28,8 +38,10 @@ class CreateUserUseCase {
 				name,
 				cpf,
 				password: passwordHash,
-				flag,
+				nameCandidate,
+				numberCandidate,
 				phone,
+				flag,
 			},
 		});
 
