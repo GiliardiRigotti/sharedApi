@@ -6,141 +6,43 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model User {
-  id           Int            @id @default(autoincrement())
-  name         String
-  cpf          String         @unique
-  password     String
-  flag         String
-  refreshToken RefreshToken[]
+  id              Int            @id @default(autoincrement())
+  name            String
+  cpf             String         @unique
+  password        String
+  phone           String         @unique
+  flag            String
+  refreshToken    RefreshToken[]
+  nameCandidate   String
+  numberCandidate String         @unique
+  militant        Militant[]
 
   @@map("users")
 }
 
-model LegalGuardian {
-  id           Int           @id @default(autoincrement())
+model Militant {
+  id           Int            @id @default(autoincrement())
   name         String
-  cpf          String        @unique
-  password     String
-  numberPhones NumberPhone[]
-  students     Student[]
+  codeAccess   String         @unique
+  phone        String         @unique
+  refreshToken RefreshToken[]
+  User         User[]
 
-  @@map("legalguardians")
-}
-
-model NumberPhone {
-  id              Int            @id @default(autoincrement())
-  number          String         @unique
-  LegalGuardian   LegalGuardian? @relation(fields: [legalGuardianId], references: [id])
-  legalGuardianId Int?
-
-  @@map("numberPhones")
-}
-
-model Student {
-  id              Int            @id @default(autoincrement())
-  name            String
-  birthdate       String
-  grade           Grade          @relation(fields: [gradeId], references: [id])
-  legalGuardian   LegalGuardian? @relation(fields: [legalGuardianId], references: [id])
-  infoAddress     InfoAddress    @relation(fields: [infoAddressId], references: [id])
-  infoAddressId   Int
-  legalGuardianId Int?
-  gradeId         Int
-  shift           Shift          @relation(fields: [shiftId], references: [id])
-  shiftId         Int
-
-  @@map("studends")
-}
-
-model Neighborhood {
-  id          Int           @id @default(autoincrement())
-  name        String        @unique
-  InfoAddress InfoAddress[]
-
-  @@map("neighborhoods")
-}
-
-model Address {
-  id          Int           @id @default(autoincrement())
-  name        String        @unique
-  InfoAddress InfoAddress[]
-
-  @@map("addresses")
-}
-
-model InfoAddress {
-  id             Int          @id @default(autoincrement())
-  address        Address      @relation(fields: [addressId], references: [id])
-  neighborhood   Neighborhood @relation(fields: [neighborhoodId], references: [id])
-  addressId      Int
-  addressNumber  Int
-  addressRef     String
-  neighborhoodId Int
-  Student        Student[]
-
-  @@map("infoAddress")
-}
-
-model Grade {
-  id      Int       @id @default(autoincrement())
-  name    String    @unique
-  Student Student[]
-
-  @@map("grades")
-}
-
-model Shift {
-  id      Int       @id @default(autoincrement())
-  name    String    @unique
-  Student Student[]
-
-  @@map("shifts")
+  @@map("militants")
 }
 
 model RefreshToken {
-  id        Int  @id @default(autoincrement())
-  expiresIn Int
-  user      User @relation(fields: [userId], references: [id])
-  userId    Int
+  id         Int      @id @default(autoincrement())
+  expiresIn  Int
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
+  militant   Militant @relation(fields: [militantId], references: [id])
+  militantId Int
 
   @@map("refresh_token")
-}
-
-model Bus {
-  id          Int           @id @default(autoincrement())
-  name        String        @unique
-  BusLocation BusLocation[]
-
-  @@map("bus")
-}
-
-model BusLocation {
-  id        Int   @id @default(autoincrement())
-  buss      Bus   @relation(fields: [bussId], references: [id])
-  bussId    Int
-  latitude  Float
-  longitude Float
-
-  @@map("busLocation")
-}
-
-model Routes {
-  id      Int       @id @default(autoincrement())
-  name    String
-  BusStop BusStop[]
-
-  @@map("routes")
-}
-
-model BusStop {
-  id        Int    @id @default(autoincrement())
-  routes    Routes @relation(fields: [routeId], references: [id])
-  routeId   Int
-  latitude  Float
-  longitude Float
 }
