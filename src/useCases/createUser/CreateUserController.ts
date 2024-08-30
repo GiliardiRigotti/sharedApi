@@ -3,8 +3,16 @@ import { CreateUserUseCase } from "./CreateUserUseCase";
 
 class CreateUserController {
 	async handle(request: Request, response: Response) {
-		const { cpf, name, password, flag, nameCandidate, numberCandidate, phone } =
-			request.body;
+		const {
+			cpf,
+			name,
+			password,
+			flag,
+			nameCandidate,
+			numberCandidate,
+			phone,
+			avatarCandidate,
+		} = request.body;
 
 		const createUserUseCase = new CreateUserUseCase();
 
@@ -15,6 +23,7 @@ class CreateUserController {
 			flag,
 			nameCandidate,
 			numberCandidate,
+			avatarCandidate,
 			phone,
 		});
 

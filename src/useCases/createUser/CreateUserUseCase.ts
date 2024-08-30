@@ -9,6 +9,7 @@ interface IUserRequest {
 	phone: string;
 	nameCandidate: string;
 	numberCandidate: string;
+	avatarCandidate: string;
 }
 
 class CreateUserUseCase {
@@ -20,6 +21,7 @@ class CreateUserUseCase {
 		phone,
 		numberCandidate,
 		nameCandidate,
+		avatarCandidate,
 	}: IUserRequest) {
 		const userAlreadyExists = await client.user.findFirst({
 			where: {
@@ -40,6 +42,7 @@ class CreateUserUseCase {
 				password: passwordHash,
 				nameCandidate,
 				numberCandidate,
+				avatarCandidate,
 				phone,
 				flag,
 			},

@@ -8,7 +8,6 @@ class GenerateRefreshToken {
 			data: {
 				userId,
 				expiresIn,
-				militantId: userId,
 			},
 		});
 		return generateRefreshToken;

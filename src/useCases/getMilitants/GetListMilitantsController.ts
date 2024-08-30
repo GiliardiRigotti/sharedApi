@@ -5,9 +5,9 @@ class GetListMilitantsController {
 	async handle(request: Request, response: Response) {
 		const getListMilitantsUseCase = new GetListMilitantsUseCase();
 
-		const students = await getListMilitantsUseCase.execute();
+		const militants = await getListMilitantsUseCase.execute();
 
-		return response.json(students);
+		return response.json(militants);
 	}
 }
 

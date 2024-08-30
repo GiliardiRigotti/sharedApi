@@ -3,11 +3,11 @@ import { AuthUserUseCase } from "./AuthUserUseCase";
 
 class AuthUserController {
 	async handle(request: Request, response: Response) {
-		const { cpf, password } = request.body;
+		const { phone, password } = request.body;
 
 		const authUserUseCase = new AuthUserUseCase();
 
-		const token = await authUserUseCase.execute({ cpf, password });
+		const token = await authUserUseCase.execute({ phone, password });
 
 		return response.json(token);
 	}

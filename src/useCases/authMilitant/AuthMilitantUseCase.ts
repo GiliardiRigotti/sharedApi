@@ -5,35 +5,35 @@ import { GenerateRefreshToken } from "../../provider/GenerateRefreshToken";
 
 interface IRequest {
 	phone: string;
-	password: string;
+	codeAccess: string;
 }
-class AuthUserUseCase {
-	async execute({ phone, password }: IRequest) {
-		const userAlreadyExists = await client.user.findFirst({
+class AuthMilitantUseCase {
+	async execute({ phone, codeAccess }: IRequest) {
+		const militantAlreadyExists = await client.militant.findFirst({
 			where: { phone },
 		});
 
-		if (!userAlreadyExists) {
-			throw new Error("User or password incorrect");
+		if (!militantAlreadyExists) {
+			throw new Error("Phone or code access incorrect");
 		}
 
-		const passwordMatch = await compare(password, userAlreadyExists.password);
+		const passwordMatch = codeAccess === militantAlreadyExists.codeAccess;
 
 		if (!passwordMatch) {
-			throw new Error("User or password incorrect");
+			throw new Error("Phone or code access incorrect");
 		}
 
 		const token = sign({}, "c2a0d19c-8918-4044-aa50-9f9e90aadf84", {
-			subject: userAlreadyExists.id.toString(),
+			subject: militantAlreadyExists.id.toString(),
 			expiresIn: "1h",
 		});
 
 		const generateRefreshToken = new GenerateRefreshToken();
 		const refreshToken = await generateRefreshToken.execute(
-			userAlreadyExists.id,
+			militantAlreadyExists.id,
 		);
 		return { token, refreshToken };
 	}
 }
 
-export { AuthUserUseCase };
+export { AuthMilitantUseCase };

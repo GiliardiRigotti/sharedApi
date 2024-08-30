@@ -7,6 +7,8 @@ import { GetListMilitantsController } from "./useCases/getMilitants/GetListMilit
 import { GetListMilitantsMobileController } from "./useCases/getMilitants/GetListMilitantsMobileController";
 import multer from "multer";
 import { storage } from "./config/multerConfig";
+import { CreatePostController } from "./useCases/createPost/CreatePostController";
+import { GetListPostsController } from "./useCases/getPosts/GetListPostsController";
 
 const upload = multer({ storage: storage });
 
@@ -16,7 +18,11 @@ const authUserController = new AuthUserController();
 
 const createUserController = new CreateUserController();
 
-const createMilitanteController = new CreateMilitantController();
+const createMilitantController = new CreateMilitantController();
+
+const createPostController = new CreatePostController();
+
+const getListPostsController = new GetListPostsController();
 
 const getListMilitansController = new GetListMilitantsController();
 
@@ -28,9 +34,15 @@ router.post("/upload", upload.single("file"), (req, res) => {
 	return res.json(req.file.filename);
 });
 
+router.post("/auth", authUserController.handle);
+
 router.post("/login", authUserController.handle);
 
-router.post("/militant", ensureAuth, createMilitanteController.handle);
+router.post("/militant", ensureAuth, createMilitantController.handle);
+
+router.post("/post", ensureAuth, createPostController.handle);
+
+router.get("/posts", ensureAuth, getListPostsController.handle);
 
 router.get("/militants", ensureAuth, getListMilitansController.handle);
 
