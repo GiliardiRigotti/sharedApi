@@ -3,9 +3,10 @@ import { GetListPostsUseCase } from "./GetListPostsUseCase";
 
 class GetListPostsController {
 	async handle(request: Request, response: Response) {
+		const id = Number.parseInt(request.params.id);
 		const getListPotsUseCase = new GetListPostsUseCase();
 
-		const posts = await getListPotsUseCase.execute();
+		const posts = await getListPotsUseCase.execute({ userId: id });
 
 		return response.json(posts);
 	}

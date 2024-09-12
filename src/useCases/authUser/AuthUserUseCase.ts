@@ -25,14 +25,24 @@ class AuthUserUseCase {
 
 		const token = sign({}, "c2a0d19c-8918-4044-aa50-9f9e90aadf84", {
 			subject: userAlreadyExists.id.toString(),
-			expiresIn: "1h",
+			expiresIn: "24h",
 		});
 
 		const generateRefreshToken = new GenerateRefreshToken();
 		const refreshToken = await generateRefreshToken.execute(
 			userAlreadyExists.id,
 		);
-		return { token, refreshToken };
+		const { id, name, nameCandidate, numberCandidate, avatarCandidate } =
+			userAlreadyExists;
+		return {
+			token,
+			refreshToken,
+			userId: id,
+			name,
+			nameCandidate,
+			numberCandidate,
+			avatarCandidate,
+		};
 	}
 }
 

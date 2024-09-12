@@ -1,24 +1,26 @@
 import { client } from "../../prisma/client";
 
 interface IRequest {
-	image: string;
+	filename: string;
+	fileType: string;
 	description?: string;
 	title?: string;
 	userId: number;
 }
 
 class CreatePostUseCase {
-	async execute({ image, userId, description, title }: IRequest) {
-		const shift = await client.post.create({
+	async execute({ filename, fileType, userId, description, title }: IRequest) {
+		const post = await client.post.create({
 			data: {
-				image,
+				filename,
+				fileType,
 				description,
 				title,
 				userId,
 			},
 		});
 
-		return shift;
+		return post;
 	}
 }
 

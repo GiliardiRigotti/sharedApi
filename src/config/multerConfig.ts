@@ -8,7 +8,8 @@ export const storage = multer.diskStorage({
 	},
 	filename: (req, file, callback) => {
 		const time = new Date().getTime();
-
-		callback(null, `${time}_${file.originalname}`);
+		const filenameSplit = file.originalname.split(".");
+		const ext = filenameSplit[filenameSplit.length - 1];
+		callback(null, `${time}_file.${ext}`);
 	},
 });

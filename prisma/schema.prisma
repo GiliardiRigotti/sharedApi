@@ -21,6 +21,7 @@ model User {
   nameCandidate   String
   numberCandidate String         @unique
   avatarCandidate String
+  createdAt       DateTime       @default(now())
   militant        Militant[]
   Post            Post[]
 
@@ -29,11 +30,13 @@ model User {
 
 model Post {
   id          Int          @id @default(autoincrement())
-  image       String
+  filename    String
+  fileType    String
   title       String?
   description String?
   user        User         @relation(fields: [userId], references: [id])
   userId      Int
+  createdAt   DateTime     @default(now())
   SharedPost  SharedPost[]
 
   @@map("posts")
@@ -47,6 +50,7 @@ model Militant {
   refreshToken RefreshToken[]
   user         User           @relation(fields: [userId], references: [id])
   userId       Int
+  createdAt    DateTime       @default(now())
   SharedPost   SharedPost[]
 
   @@map("militants")
@@ -56,6 +60,7 @@ model SharedPost {
   id         Int      @id @default(autoincrement())
   militant   Militant @relation(fields: [militantId], references: [id])
   militantId Int
+  createdAt  DateTime @default(now())
   post       Post     @relation(fields: [postId], references: [id])
   postId     Int
 

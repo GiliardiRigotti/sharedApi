@@ -27,12 +27,7 @@ class AuthMilitantUseCase {
 			subject: militantAlreadyExists.id.toString(),
 			expiresIn: "1h",
 		});
-
-		const generateRefreshToken = new GenerateRefreshToken();
-		const refreshToken = await generateRefreshToken.execute(
-			militantAlreadyExists.id,
-		);
-		return { token, refreshToken };
+		return { token, ...militantAlreadyExists };
 	}
 }
 

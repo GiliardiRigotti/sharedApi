@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
 import { AuthMilitantUseCase } from "./AuthMilitantUseCase";
 
-class AuthUserController {
+class AuthMilitantController {
 	async handle(request: Request, response: Response) {
-		const { cpf, password } = request.body;
+		const { phone, codeAccess } = request.body;
 
 		const authMilitantUseCase = new AuthMilitantUseCase();
 
@@ -13,4 +13,4 @@ class AuthUserController {
 	}
 }
 
-export { AuthUserController };
+export { AuthMilitantController };

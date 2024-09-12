@@ -3,12 +3,13 @@ import { CreatePostUseCase } from "./CreatePostUseCase";
 
 class CreatePostController {
 	async handle(request: Request, response: Response) {
-		const { image, userId, description, title } = request.body;
+		const { filename, fileType, userId, description, title } = request.body;
 
 		const createPostUseCase = new CreatePostUseCase();
 
 		const post = await createPostUseCase.execute({
-			image,
+			filename,
+			fileType,
 			userId,
 			description,
 			title,
