@@ -49,6 +49,10 @@ const getListMilitansController = new GetListMilitantsController();
 
 const deleteMilitantController = new DeleteMilitantController();
 
+router.get("/",(req, res)=>{
+	res.json({teste:"oi"})
+});
+
 router.post("/user", createUserController.handle);
 
 router.post("/candidate", createCandidateController.handle);
