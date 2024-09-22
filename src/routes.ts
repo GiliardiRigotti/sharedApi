@@ -16,6 +16,7 @@ import { GetListSharedPostsController } from "./useCases/getSharedPosts /GetList
 import { CreateSharedPostController } from "./useCases/createSharedPost/CreateSharedPostController";
 import { DeleteMilitantController } from "./useCases/deleteMilitant/DeleteMilitantController";
 import { CreateCandidateController } from "./useCases/createCandidate/CreateCandidateController";
+import { DeleteCandidateController } from "./useCases/deleteCandidate/DeleteCandidateController";
 
 const upload = multer({ storage: storage });
 
@@ -28,6 +29,10 @@ const authMilitantCongtroller = new AuthMilitantController();
 const createUserController = new CreateUserController();
 
 const createCandidateController = new CreateCandidateController();
+
+const getCandidatesController = new CreateCandidateController();
+
+const deleteCandidateController = new DeleteCandidateController();
 
 const createSharedPostController = new CreateSharedPostController();
 
@@ -51,9 +56,11 @@ const deleteMilitantController = new DeleteMilitantController();
 
 router.post("/user", createUserController.handle);
 
-router.post("/candidate", createCandidateController.handle);
+router.post("/candidate", ensureAuth, createCandidateController.handle);
 
-router.get("/candidates", createCandidateController.handle);
+router.get("/candidates", ensureAuth, getCandidatesController.handle);
+
+router.delete("/candidate/:id", ensureAuth, deleteCandidateController.handle);
 
 router.post("/upload", upload.single("file"), (req, res) => {
 	return res.json(req.file.filename);
