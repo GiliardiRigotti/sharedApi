@@ -11,9 +11,7 @@ class GetUserUseCase {
 		});
 
 		return {
-			nameCandidate: user.nameCandidate,
-			avatarCandidate: user.avatarCandidate,
-			numberCandidate: user.numberCandidate,
+			user,
 		};
 	}
 }
