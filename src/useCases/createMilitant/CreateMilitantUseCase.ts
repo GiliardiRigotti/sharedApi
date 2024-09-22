@@ -5,17 +5,17 @@ interface IMilitantRequest {
 	name: string;
 	phone: string;
 	codeAccess: string;
-	userId: number;
+	candidateId: number;
 }
 
 class CreateMilitantUseCase {
-	async execute({ name, codeAccess, phone, userId }: IMilitantRequest) {
+	async execute({ name, codeAccess, phone, candidateId }: IMilitantRequest) {
 		const user = await client.militant.create({
 			data: {
 				name,
 				codeAccess,
 				phone,
-				userId,
+				candidateId,
 			},
 		});
 

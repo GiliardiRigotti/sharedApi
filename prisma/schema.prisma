@@ -11,19 +11,14 @@ datasource db {
 }
 
 model User {
-  id              Int            @id @default(autoincrement())
-  name            String
-  cpf             String         @unique
-  password        String
-  phone           String         @unique
-  flag            String
-  refreshToken    RefreshToken[]
-  nameCandidate   String
-  numberCandidate String         @unique
-  avatarCandidate String
-  createdAt       DateTime       @default(now())
-  militant        Militant[]
-  Post            Post[]
+  id           Int            @id @default(autoincrement())
+  name         String
+  cpf          String         @unique
+  password     String
+  phone        String         @unique
+  refreshToken RefreshToken[]
+  createdAt    DateTime       @default(now())
+  Candidate    Candidate[]
 
   @@map("users")
 }
@@ -34,12 +29,26 @@ model Post {
   fileType    String
   title       String?
   description String?
-  user        User         @relation(fields: [userId], references: [id])
-  userId      Int
   createdAt   DateTime     @default(now())
+  candidate   Candidate    @relation(fields: [candidateId], references: [id])
+  candidateId Int
   SharedPost  SharedPost[]
 
   @@map("posts")
+}
+
+model Candidate {
+  id              Int        @id @default(autoincrement())
+  nameCandidate   String
+  numberCandidate String     @unique
+  avatarCandidate String
+  user            User       @relation(fields: [userId], references: [id])
+  userId          Int
+  Militant        Militant[]
+  Post            Post[]
+  createdAt       DateTime   @default(now())
+
+  @@map("candidates")
 }
 
 model Militant {
@@ -48,8 +57,8 @@ model Militant {
   codeAccess   String         @unique
   phone        String         @unique
   refreshToken RefreshToken[]
-  user         User           @relation(fields: [userId], references: [id])
-  userId       Int
+  candidate    Candidate      @relation(fields: [candidateId], references: [id])
+  candidateId  Int
   createdAt    DateTime       @default(now())
   SharedPost   SharedPost[]
 

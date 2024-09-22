@@ -5,10 +5,6 @@ CREATE TABLE "users" (
     "cpf" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
-    "flag" TEXT NOT NULL,
-    "nameCandidate" TEXT NOT NULL,
-    "numberCandidate" TEXT NOT NULL,
-    "avatarCandidate" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -19,9 +15,20 @@ CREATE TABLE "posts" (
     "fileType" TEXT NOT NULL,
     "title" TEXT,
     "description" TEXT,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "candidateId" INTEGER NOT NULL,
+    CONSTRAINT "posts_candidateId_fkey" FOREIGN KEY ("candidateId") REFERENCES "candidates" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "candidates" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "nameCandidate" TEXT NOT NULL,
+    "numberCandidate" TEXT NOT NULL,
+    "avatarCandidate" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "posts_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "candidates_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -30,9 +37,9 @@ CREATE TABLE "militants" (
     "name" TEXT NOT NULL,
     "codeAccess" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "candidateId" INTEGER NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "militants_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "militants_candidateId_fkey" FOREIGN KEY ("candidateId") REFERENCES "candidates" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -62,7 +69,7 @@ CREATE UNIQUE INDEX "users_cpf_key" ON "users"("cpf");
 CREATE UNIQUE INDEX "users_phone_key" ON "users"("phone");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_numberCandidate_key" ON "users"("numberCandidate");
+CREATE UNIQUE INDEX "candidates_numberCandidate_key" ON "candidates"("numberCandidate");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "militants_codeAccess_key" ON "militants"("codeAccess");

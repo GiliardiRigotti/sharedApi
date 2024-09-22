@@ -4,7 +4,6 @@ import { AuthUserController } from "./useCases/authUser/AuthUserController";
 import { CreateMilitantController } from "./useCases/createMilitant/CreateMilitantController";
 import { ensureAuth } from "./middlewares/ensureAuth";
 import { GetListMilitantsController } from "./useCases/getMilitants/GetListMilitantsController";
-import { GetListMilitantsMobileController } from "./useCases/getMilitants/GetListMilitantsMobileController";
 import multer from "multer";
 import { storage } from "./config/multerConfig";
 import { CreatePostController } from "./useCases/createPost/CreatePostController";
@@ -16,6 +15,7 @@ import { GetUserController } from "./useCases/getUser/GetUserController";
 import { GetListSharedPostsController } from "./useCases/getSharedPosts /GetListSharedPostsController";
 import { CreateSharedPostController } from "./useCases/createSharedPost/CreateSharedPostController";
 import { DeleteMilitantController } from "./useCases/deleteMilitant/DeleteMilitantController";
+import { CreateCandidateController } from "./useCases/createCandidate/CreateCandidateController";
 
 const upload = multer({ storage: storage });
 
@@ -26,6 +26,8 @@ const authUserController = new AuthUserController();
 const authMilitantCongtroller = new AuthMilitantController();
 
 const createUserController = new CreateUserController();
+
+const createCandidateController = new CreateCandidateController();
 
 const createSharedPostController = new CreateSharedPostController();
 
@@ -45,11 +47,13 @@ const deletePostController = new DeletePostController();
 
 const getListMilitansController = new GetListMilitantsController();
 
-const getListMilitantsMobileController = new GetListMilitantsMobileController();
-
 const deleteMilitantController = new DeleteMilitantController();
 
 router.post("/user", createUserController.handle);
+
+router.post("/candidate", createCandidateController.handle);
+
+router.get("/candidates", createCandidateController.handle);
 
 router.post("/upload", upload.single("file"), (req, res) => {
 	return res.json(req.file.filename);
@@ -78,11 +82,5 @@ router.get("/militants/:id", ensureAuth, getListMilitansController.handle);
 router.delete("/militant/:id", ensureAuth, deleteMilitantController.handle);
 
 router.get("/user/:id", ensureAuth, getUserController.handle);
-
-router.get(
-	"/listMilitants",
-	ensureAuth,
-	getListMilitantsMobileController.handle,
-);
 
 export { router };

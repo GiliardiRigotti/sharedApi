@@ -5,18 +5,24 @@ interface IRequest {
 	fileType: string;
 	description?: string;
 	title?: string;
-	userId: number;
+	candidateId: number;
 }
 
 class CreatePostUseCase {
-	async execute({ filename, fileType, userId, description, title }: IRequest) {
+	async execute({
+		filename,
+		fileType,
+		candidateId,
+		description,
+		title,
+	}: IRequest) {
 		const post = await client.post.create({
 			data: {
 				filename,
 				fileType,
 				description,
 				title,
-				userId,
+				candidateId,
 			},
 		});
 

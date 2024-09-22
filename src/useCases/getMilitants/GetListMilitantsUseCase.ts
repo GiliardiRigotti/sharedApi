@@ -7,7 +7,7 @@ class GetListMilitantsUseCase {
 	async execute({ id }: IRequest) {
 		const militants = await client.militant.findMany({
 			where: {
-				userId: id,
+				candidateId: id,
 			},
 		});
 
