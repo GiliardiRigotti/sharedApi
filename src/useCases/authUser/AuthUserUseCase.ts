@@ -32,16 +32,12 @@ class AuthUserUseCase {
 		const refreshToken = await generateRefreshToken.execute(
 			userAlreadyExists.id,
 		);
-		const { id, name, nameCandidate, numberCandidate, avatarCandidate } =
-			userAlreadyExists;
+		const { id, name } = userAlreadyExists;
 		return {
 			token,
 			refreshToken,
 			userId: id,
 			name,
-			nameCandidate,
-			numberCandidate,
-			avatarCandidate,
 		};
 	}
 }
