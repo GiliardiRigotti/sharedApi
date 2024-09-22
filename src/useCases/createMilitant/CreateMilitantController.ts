@@ -3,7 +3,7 @@ import { CreateMilitantUseCase } from "./CreateMilitantUseCase";
 
 class CreateMilitantController {
 	async handle(request: Request, response: Response) {
-		const { name, phone, codeAccess, userId } = request.body;
+		const { name, phone, codeAccess, candidateId } = request.body;
 
 		const createMilitantUseCase = new CreateMilitantUseCase();
 
@@ -11,7 +11,7 @@ class CreateMilitantController {
 			name,
 			codeAccess,
 			phone,
-			userId,
+			candidateId,
 		});
 
 		return response.json(militant.id);
