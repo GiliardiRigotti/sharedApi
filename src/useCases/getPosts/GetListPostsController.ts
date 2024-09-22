@@ -6,7 +6,7 @@ class GetListPostsController {
 		const id = Number.parseInt(request.params.id);
 		const getListPotsUseCase = new GetListPostsUseCase();
 
-		const posts = await getListPotsUseCase.execute({ userId: id });
+		const posts = await getListPotsUseCase.execute({ candidateId: id });
 
 		return response.json(posts);
 	}
