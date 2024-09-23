@@ -19,6 +19,7 @@ model User {
   refreshToken RefreshToken[]
   createdAt    DateTime       @default(now())
   Candidate    Candidate[]
+  Militant     Militant[]
 
   @@map("users")
 }
@@ -59,6 +60,8 @@ model Militant {
   refreshToken RefreshToken[]
   candidate    Candidate      @relation(fields: [candidateId], references: [id])
   candidateId  Int
+  user         User           @relation(fields: [userId], references: [id])
+  userId       Int
   createdAt    DateTime       @default(now())
   SharedPost   SharedPost[]
 

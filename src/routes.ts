@@ -16,6 +16,8 @@ import { GetListSharedPostsController } from "./useCases/getSharedPosts /GetList
 import { CreateSharedPostController } from "./useCases/createSharedPost/CreateSharedPostController";
 import { DeleteMilitantController } from "./useCases/deleteMilitant/DeleteMilitantController";
 import { CreateCandidateController } from "./useCases/createCandidate/CreateCandidateController";
+import { GetCandidatesUseCase } from "./useCases/getCandidates/GetCandidatesUseCase";
+import { GetCandidatesController } from "./useCases/getCandidates/GetCandidatesController";
 
 const upload = multer({ storage: storage });
 
@@ -28,6 +30,8 @@ const authMilitantCongtroller = new AuthMilitantController();
 const createUserController = new CreateUserController();
 
 const createCandidateController = new CreateCandidateController();
+
+const getListCandidatesController = new GetCandidatesController();
 
 const createSharedPostController = new CreateSharedPostController();
 
@@ -49,15 +53,15 @@ const getListMilitansController = new GetListMilitantsController();
 
 const deleteMilitantController = new DeleteMilitantController();
 
-router.get("/",(req, res)=>{
-	res.json({teste:"oi"})
+router.get("/", (req, res) => {
+	res.json({ teste: "oi" });
 });
 
 router.post("/user", createUserController.handle);
 
 router.post("/candidate", createCandidateController.handle);
 
-router.get("/candidates", createCandidateController.handle);
+router.get("/candidates/:id", getListCandidatesController.handle);
 
 router.post("/upload", upload.single("file"), (req, res) => {
 	return res.json(req.file.filename);

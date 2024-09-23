@@ -1,13 +1,13 @@
 import { client } from "../../prisma/client";
 
 interface IRequest {
-	id: number;
+	userId: number;
 }
 
 class GetCandidatesUseCase {
-	async execute({ id }: IRequest) {
+	async execute({ userId }: IRequest) {
 		const candidates = await client.candidate.findMany({
-			where: { id },
+			where: { userId },
 		});
 
 		return candidates;
