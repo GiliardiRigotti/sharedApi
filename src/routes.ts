@@ -18,6 +18,8 @@ import { DeleteMilitantController } from "./useCases/deleteMilitant/DeleteMilita
 import { CreateCandidateController } from "./useCases/createCandidate/CreateCandidateController";
 import { GetCandidatesUseCase } from "./useCases/getCandidates/GetCandidatesUseCase";
 import { GetCandidatesController } from "./useCases/getCandidates/GetCandidatesController";
+import { GetListMilitantsByCandidateIdController } from "./useCases/getMilitantsByCandidateId/GetListMilitantsByCandidateIdController";
+import { DeleteCandidateController } from "./useCases/deleteCandidate/DeleteCandidateController";
 
 const upload = multer({ storage: storage });
 
@@ -41,6 +43,11 @@ const getUserController = new GetUserController();
 
 const createMilitantController = new CreateMilitantController();
 
+const getListMilitantsByCandidateIdController =
+	new GetListMilitantsByCandidateIdController();
+
+const deleteCandidateController = new DeleteCandidateController();
+
 const createPostController = new CreatePostController();
 
 const getListPostsController = new GetListPostsController();
@@ -62,6 +69,13 @@ router.post("/user", createUserController.handle);
 router.post("/candidate", createCandidateController.handle);
 
 router.get("/candidates/:id", getListCandidatesController.handle);
+
+router.delete("/candidate/:id", deleteCandidateController.handle);
+
+router.get(
+	"/militantsByCandidate/:id",
+	getListMilitantsByCandidateIdController.handle,
+);
 
 router.post("/upload", upload.single("file"), (req, res) => {
 	return res.json(req.file.filename);

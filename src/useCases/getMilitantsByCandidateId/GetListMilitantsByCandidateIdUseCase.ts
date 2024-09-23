@@ -3,11 +3,11 @@ import { client } from "../../prisma/client";
 interface IRequest {
 	id: number;
 }
-class GetListMilitantsUseCase {
+class GetListMilitantsByCandidateIdUseCase {
 	async execute({ id }: IRequest) {
 		const militants = await client.militant.findMany({
 			where: {
-				userId: id,
+				candidateId: id,
 			},
 		});
 
@@ -15,4 +15,4 @@ class GetListMilitantsUseCase {
 	}
 }
 
-export { GetListMilitantsUseCase };
+export { GetListMilitantsByCandidateIdUseCase };

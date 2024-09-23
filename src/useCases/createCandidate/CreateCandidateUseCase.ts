@@ -1,7 +1,7 @@
 import { hash } from "bcryptjs";
 import { client } from "../../prisma/client";
 
-interface IMilitantRequest {
+interface ICandidateRequest {
 	nameCandidate: string;
 	numberCandidate: string;
 	avatarCandidate: string;
@@ -14,8 +14,8 @@ class CreateCandidateUseCase {
 		numberCandidate,
 		nameCandidate,
 		avatarCandidate,
-	}: IMilitantRequest) {
-		const user = await client.candidate.create({
+	}: ICandidateRequest) {
+		const candidate = await client.candidate.create({
 			data: {
 				userId,
 				numberCandidate,
@@ -24,7 +24,7 @@ class CreateCandidateUseCase {
 			},
 		});
 
-		return user;
+		return candidate;
 	}
 }
 
