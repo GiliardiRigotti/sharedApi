@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = "postgresql://shared_api_user:YKIQz5Gya0w4SexkkfKs2UaEB0OPOPjV@dpg-crosbgjqf0us73c48d2g-a.oregon-postgres.render.com/shared_api"
 }
 
 model User {
