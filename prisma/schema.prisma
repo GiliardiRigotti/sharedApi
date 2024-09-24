@@ -41,7 +41,7 @@ model Post {
 model Candidate {
   id              Int        @id @default(autoincrement())
   nameCandidate   String
-  numberCandidate String     @unique
+  numberCandidate String
   avatarCandidate String
   user            User       @relation(fields: [userId], references: [id])
   userId          Int
