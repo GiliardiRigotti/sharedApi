@@ -4,7 +4,6 @@ import express, {
 	type Request,
 	type Response,
 } from "express";
-import { router } from "./routes";
 import cors from "cors";
 import { ICustomer } from "./interfaces/customer";
 import { createCostumerAsaas, createPaymentAsaas, getPaymentStatusAsaas, getQRCodePixAsaas } from "./provider/payment";
@@ -18,7 +17,6 @@ app.use(cors());
 
 app.use("/images", express.static("uploads"));
 
-app.use(router);
 
 app.post('/payments', express.json({type: 'application/json'}), async (request, response) => {
 	const {paymentInfo, customerInfo} = request.body as {paymentInfo: IPayment, customerInfo: ICustomer}
