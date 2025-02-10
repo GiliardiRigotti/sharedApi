@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import { CreateSharedPostUseCase } from "./CreateSharedPostUseCase";
 
 class CreateSharedPostController {
 	async handle(request: Request, response: Response) {
