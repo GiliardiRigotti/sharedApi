@@ -12,7 +12,6 @@ import { AuthMilitantController } from "./useCases/authMilitant/AuthMilitantCont
 import { DeletePostController } from "./useCases/deletePost/DeletePostController";
 import { FindPostController } from "./useCases/findPost/FindPostController";
 import { GetUserController } from "./useCases/getUser/GetUserController";
-import { GetListSharedPostsController } from "./useCases/getSharedPosts /GetListSharedPostsController";
 import { CreateSharedPostController } from "./useCases/createSharedPost/CreateSharedPostController";
 import { DeleteMilitantController } from "./useCases/deleteMilitant/DeleteMilitantController";
 import { CreateCandidateController } from "./useCases/createCandidate/CreateCandidateController";
