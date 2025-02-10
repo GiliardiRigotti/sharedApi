@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import { GetListSharedPostsUseCase } from "./GetListSharedPostsUseCase";
 
 class GetListSharedPostsController {
 	async handle(request: Request, response: Response) {
