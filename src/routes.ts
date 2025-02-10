@@ -1,24 +1,8 @@
 import { Router } from "express";
-import { CreateUserController } from "./useCases/createUser/CreateUserController";
-import { AuthUserController } from "./useCases/authUser/AuthUserController";
-import { CreateMilitantController } from "./useCases/createMilitant/CreateMilitantController";
 import { ensureAuth } from "./middlewares/ensureAuth";
-import { GetListMilitantsController } from "./useCases/getMilitants/GetListMilitantsController";
 import multer from "multer";
 import { storage } from "./config/multerConfig";
-import { CreatePostController } from "./useCases/createPost/CreatePostController";
-import { GetListPostsController } from "./useCases/getPosts/GetListPostsController";
-import { AuthMilitantController } from "./useCases/authMilitant/AuthMilitantController";
-import { DeletePostController } from "./useCases/deletePost/DeletePostController";
-import { FindPostController } from "./useCases/findPost/FindPostController";
-import { GetUserController } from "./useCases/getUser/GetUserController";
-import { CreateSharedPostController } from "./useCases/createSharedPost/CreateSharedPostController";
-import { DeleteMilitantController } from "./useCases/deleteMilitant/DeleteMilitantController";
-import { CreateCandidateController } from "./useCases/createCandidate/CreateCandidateController";
-import { GetCandidatesUseCase } from "./useCases/getCandidates/GetCandidatesUseCase";
-import { GetCandidatesController } from "./useCases/getCandidates/GetCandidatesController";
-import { GetListMilitantsByCandidateIdController } from "./useCases/getMilitantsByCandidateId/GetListMilitantsByCandidateIdController";
-import { DeleteCandidateController } from "./useCases/deleteCandidate/DeleteCandidateController";
+
 
 const upload = multer({ storage: storage });
 
