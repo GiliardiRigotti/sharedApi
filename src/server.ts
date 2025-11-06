@@ -36,28 +36,32 @@ app.post('/payments', express.json({type: 'application/json'}), async (request, 
 	}
 	});
 
-	app.get('/payments/:paymentId/status', express.json({type: 'application/json'}), async (request, response) => {
-		const {paymentId} = request.params as {paymentId: string}
-		console.log(paymentId)
-				try {
-					const paymentStatus = await getPaymentStatusAsaas(paymentId)
-					console.log(paymentId)
-					response.json(paymentStatus)
-				} catch (error) {
-					console.log(error)
-				}
-			
-		});
+app.get('/payments/:paymentId/status', express.json({type: 'application/json'}), async (request, response) => {
+	const {paymentId} = request.params as {paymentId: string}
+	console.log(paymentId)
+		try {
+			const paymentStatus = await getPaymentStatusAsaas(paymentId)
+			console.log(paymentId)
+			response.json(paymentStatus)
+		} catch (error) {
+			console.log(error)
+		}
+	
+});
 
-		app.get('/pdf',async (request, response)=>{
-			const encodedPDF = 'Teste'
-			response.writeHead(200, {
-				'Content-Type': 'application/pdf',
-				'Content-Disposition': 'attachment; filename="filename.pdf"'
-			  })
-			const download = Buffer.from(encodedPDF, 'base64');
-			response.end(download)
-		})
+app.get('/pdf',async (request, response)=>{
+	const encodedPDF = 'Teste'
+	response.writeHead(200, {
+		'Content-Type': 'application/pdf',
+		'Content-Disposition': 'attachment; filename="filename.pdf"'
+	  })
+	const download = Buffer.from(encodedPDF, 'base64');
+	response.end(download)
+})
+
+app.get('/',async (request, response)=>{
+	return response.json({ message:"Hello World", timestamp: new Date().toISOString() });
+})
 
 app.use(
 	(error: Error, request: Request, response: Response, next: NextFunction) => {
