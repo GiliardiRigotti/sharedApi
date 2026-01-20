@@ -39,8 +39,9 @@ app.post(
 	"/apple",
 	express.json({ type: "application/json" }),
 	async (request, response) => {
+		const date = new Date().toLocaleString()
 		try {
-			const docRef = await addDoc(collection(db, "apple"), request.body);
+			const docRef = await addDoc(collection(db, "apple"), {...request.body, created_at: date});
 			console.log("Document written with ID: ", docRef.id);
 			return response.json({ id: docRef.id });
 		} catch (e) {
